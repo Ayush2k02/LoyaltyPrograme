@@ -8,21 +8,21 @@ var express = require("express"),
   jsonwebtoken = require("jsonwebtoken");
 
 const mongoose = require("mongoose");
-const option = {
-  socketTimeoutMS: 30000,
-  keepAlive: true,
-  reconnectTries: 30000,
-};
+// const option = {
+//   socketTimeoutMS: 30000,
+//   keepAlive: true,
+//   reconnectTries: 30000,
+// };
 
-const mongoURI = process.env.MONGODB_URI;
-mongoose.connect("mongodb://127.0.0.1:27017/ecommerce", option).then(
-  function () {
-    //connected successfully
-  },
-  function (err) {
-    //err handle
-  }
-);
+// const mongoURI = process.env.MONGODB_URI;
+// mongoose.connect("mongodb://127.0.0.1:27017/ecommerce", option).then(
+//   function () {
+//     //connected successfully
+//   },
+//   function (err) {
+//     //err handle
+//   }
+// );
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -54,8 +54,16 @@ app.use(function (req, res) {
   res.status(404).send({ url: req.originalUrl + " not found" });
 });
 
-app.listen(port);
-
-console.log(" RESTful API server started on: " + port);
-
+// console.log(" RESTful API server started on: " + port);
+mongoose
+  .connect("mongodb://127.0.0.1:27017/ecommerce")
+  .then(() => {
+    console.log("Database connected!");
+    app.listen(5000, () => {
+      console.log("Server Started and listening to ${5000}");
+    });
+  })
+  .catch((error) => {
+    console.error(error);
+  });
 module.exports = app;
