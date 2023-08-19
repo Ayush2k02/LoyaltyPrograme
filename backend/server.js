@@ -7,6 +7,14 @@ var express = require("express"),
   bodyParser = require("body-parser"),
   jsonwebtoken = require("jsonwebtoken");
 
+var cors = require("cors");
+app.use(cors());
+app.use(
+  bodyParser.urlencoded({
+    extended: false,
+  })
+);
+app.use(bodyParser.json());
 const mongoose = require("mongoose");
 // const option = {
 //   socketTimeoutMS: 30000,
